@@ -4,7 +4,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v16-appRouter";
 import { ProfileContextProvider } from "@/context/profileContext";
 
 export const metadata: Metadata = {
-  title: "Projet 4 - CS494",
+  title: "Project 4 - CS494",
   description: "Project 4 for Dan's hardest class, CS494!",
 };
 
