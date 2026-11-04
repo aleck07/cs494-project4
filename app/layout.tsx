@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en">
-      <body>
+      <body suppressHydrationWarning>
         <AppRouterCacheProvider>
           <ProfileContextProvider> {children} </ProfileContextProvider>
         </AppRouterCacheProvider>
