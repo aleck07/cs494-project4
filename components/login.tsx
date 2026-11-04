@@ -1,11 +1,14 @@
 "use client";
 
+import { useProfileContext } from "@/context/profileContext";
 import { Box, Button, TextField } from "@mui/material";
 import { useState } from "react";
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+
+  const { signUp } = useProfileContext()
   return (
     <Box>
       <TextField
@@ -19,8 +22,8 @@ export default function Login() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <Button variant="contained">Log In</Button>
-      <Button variant="contained">Sign Up</Button>
+      <Button variant="contained" >Log In</Button>
+      <Button variant="contained" onClick={()=>signUp(email, password)}>Sign Up</Button>
     </Box>
   );
 }
