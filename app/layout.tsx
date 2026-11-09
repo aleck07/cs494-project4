@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter'
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { ProfileContextProvider } from "@/context/profileContext";
+import { ImageContextProvider } from "@/context/imageContext";
 
 export const metadata: Metadata = {
   title: "Project 4",
@@ -14,9 +15,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en">
       <body>
         <AppRouterCacheProvider>
-          <ProfileContextProvider>
-            {children}
-          </ProfileContextProvider>
+          <ImageContextProvider>
+            <ProfileContextProvider>{children}</ProfileContextProvider>
+          </ImageContextProvider>
         </AppRouterCacheProvider>
       </body>
     </html>
