@@ -10,7 +10,6 @@ import { createContext, useContext, useState, ReactNode } from 'react'
 // components:
 // show our gallery
 // image needs a delete icon so the user can click that to trigger the DELETE function
-// 
 
 // create a type for your props
 type ImageContextProps = {

@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { put, list } from "@vercel/blob";
+import { put, list, del } from "@vercel/blob";
 import { generateFileName } from "@/lib/file";
 import { todo } from "node:test";
 
@@ -44,6 +44,27 @@ export async function GET() {
   return Response.json({ imageUrls });
 }
 
-export async function DELETE(){
-  // TODO: should be able to delete a file by path
+export async function DELETE(request: Request) {
+  // TODO: should be able to delete a file by path. An icon will call this function
+  const supabase = await createClient();
+  const user = await supabase.auth.getUser();
+
+  if (!user || !user.data.user) {
+    return Response.json({ error: "User not authenticated" });
+  }
+
+  const userId = user.data.user.id;
+
+  const imagePath = request.url.split("/api/images/")[1];
+
+  if (!imagePath) {
+    return Response.json({ error: "Image path not provided" });
+  }
+
+  try {
+    await del(`${userId}/${imagePath}`);
+    return Response.json({ message: "Image deleted successfully" });
+  } catch (error) {
+    return Response.json({ error: "Failed to delete image!" });
+  }
 }
