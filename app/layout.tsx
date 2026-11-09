@@ -1,19 +1,22 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v16-appRouter";
+
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter'
 import { ProfileContextProvider } from "@/context/profileContext";
 
 export const metadata: Metadata = {
-  title: "Project 4 - CS494",
-  description: "Project 4 for Dan's hardest class, CS494!",
+  title: "Project 4",
+  description: "Dan is cool",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en">
-      <body suppressHydrationWarning>
+      <body>
         <AppRouterCacheProvider>
-          <ProfileContextProvider> {children} </ProfileContextProvider>
+          <ProfileContextProvider>
+            {children}
+          </ProfileContextProvider>
         </AppRouterCacheProvider>
       </body>
     </html>
