@@ -53,8 +53,6 @@ export async function DELETE(request: Request) {
     return Response.json({ error: "User not authenticated" });
   }
 
-  const userId = user.data.user.id;
-
   let imageUrl: string;
   try {
     ({ imageUrl } = await request.json());
