@@ -55,16 +55,17 @@ export async function DELETE(request: Request) {
 
   const userId = user.data.user.id;
 
-  const imagePath = request.url.split("/api/images/")[1];
-
-  if (!imagePath) {
-    return Response.json({ error: "Image path not provided" });
+  let imageUrl: string;
+  try {
+    ({ imageUrl } = await request.json());
+  } catch {
+    return Response.json({ error: "Invalid request body" }, { status: 400 });
   }
 
   try {
-    await del(`${userId}/${imagePath}`);
+    await del(imageUrl);
     return Response.json({ message: "Image deleted successfully" });
   } catch (error) {
-    return Response.json({ error: "Failed to delete image!" });
+    return Response.json({ error: "Failed to delete image!" }, { status: 500 });
   }
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useState, ReactNode } from 'react'
+import { createContext, useContext, useState, ReactNode, useEffect } from 'react'
 
 // TODO: need to store the imageUrls
 // TODO: need to get the imageUrls, method: GET
@@ -14,7 +14,8 @@ import { createContext, useContext, useState, ReactNode } from 'react'
 // create a type for your props
 type ImageContextProps = {
     uploadImages: (images: File[]) => void
-
+    imageUrls: string[]
+    deleteImage: (imageUrl: string) => void
 }
 
 // create a context variable
@@ -22,6 +23,17 @@ const ImageContext = createContext<ImageContextProps | undefined>(undefined)
 
 // create a context provider
 export function ImageContextProvider(props: { children: ReactNode }) {
+    const [imageUrls, setImageUrls] = useState<string[]>([])
+
+    async function getImageUrls() {
+        const response = await fetch("/api/images", { method: "GET" })
+        const data = await response.json()
+        setImageUrls(data.imageUrls ?? [])
+    }
+
+    useEffect(() => {
+        getImageUrls()
+    }, [])
     
     async function uploadImages(images: File[]){
         console.log(images)
@@ -34,12 +46,27 @@ export function ImageContextProvider(props: { children: ReactNode }) {
 
         const data = await response.json()
 
-        console.log(data.imageUrls)
+        setImageUrls(prevImageUrls => [...prevImageUrls, ...data.imageUrls])
+    }
+
+    async function deleteImage(imageUrl: string) {
+        const response = await fetch("/api/images", {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ imageUrl })
+        })
+
+        if (!response.ok) {
+            console.log("Failed to delete image")
+            return
+        }
+
+        setImageUrls(prev => prev.filter(url => url !== imageUrl))
     }
 
 
     return (
-        <ImageContext.Provider value={{ uploadImages }}>
+        <ImageContext.Provider value={{ uploadImages, deleteImage, imageUrls }}>
             {props.children}
         </ImageContext.Provider>
     )
