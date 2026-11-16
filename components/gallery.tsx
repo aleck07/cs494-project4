@@ -11,13 +11,15 @@ export default function Gallery() {
     <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "flex-start", gap: 2, p: 2 }}>
       {imageUrls.map((image: string) => (
         <Box key={image} sx={{ position: "relative", width: 300 }}>
-          <Image
-            src={image}
-            width={300}
-            height={300}
-            alt="Gallery"
-            style={{ display: "block", width: "100%", height: "auto" }}
-          />
+          <a href={image} target="_blank">
+            <Image
+              src={image}
+              width={300}
+              height={300}
+              alt="Gallery"
+              style={{ display: "block", width: "100%", height: "auto", cursor: "zoom-in" }}
+            />
+          </a>
           <IconButton
             aria-label="Delete image"
             size="small"
