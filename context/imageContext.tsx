@@ -2,15 +2,6 @@
 
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react'
 
-// TODO: need to store the imageUrls
-// TODO: need to get the imageUrls, method: GET
-// TODO: need a function to delete an image by URL method: DELETE
-// TODO: need certain components:
-
-// components:
-// show our gallery
-// image needs a delete icon so the user can click that to trigger the DELETE function
-
 // create a type for your props
 type ImageContextProps = {
     uploadImages: (images: File[]) => void
